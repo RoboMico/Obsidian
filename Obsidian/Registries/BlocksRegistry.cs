@@ -5,6 +5,8 @@ namespace Obsidian.Registries;
 
 internal static partial class BlocksRegistry
 {
+    private static string[] illegalBlockNames = ["Obsidian", "TrialSpawner", "Vault"];
+
     public static int GlobalBitsPerBlocks { get; private set; }
     static BlocksRegistry()
     {
@@ -105,7 +107,7 @@ internal static partial class BlocksRegistry
             blockTypeCache.TryAdd(blockName, type!);
         }
 
-        var ctor = type!.GetConstructor(Type.EmptyTypes);
+        var ctor = type!.GetConstructor(Type.EmptyTypes)!;
 
         var expression = Expression.New(ctor);
 
@@ -158,16 +160,6 @@ internal static partial class BlocksRegistry
         return block;
     }
 
-    private static string GetSanitizedName(string value)
-    {
-        var sanitizedBlockName = value;
-        if (sanitizedBlockName == "Obsidian")
-            sanitizedBlockName = "ObsidianBlock";
-        if (sanitizedBlockName == "TrialSpawner")
-            sanitizedBlockName = "TrialSpawnerBlock";
-        if (sanitizedBlockName == "Vault")
-            sanitizedBlockName = "VaultBlock";
-
-        return sanitizedBlockName;
-    }
+    private static string GetSanitizedName(string value) =>
+        illegalBlockNames.Contains(value) ? $"{value}Block" : value;
 }

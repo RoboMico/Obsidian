@@ -2,6 +2,7 @@
 using Obsidian.API.Utilities;
 using Obsidian.Commands.Framework.Entities;
 using Obsidian.Entities;
+using Obsidian.Net.Packets.Play.Clientbound;
 using Obsidian.Registries;
 using Obsidian.WorldData;
 using System.Collections.Frozen;
@@ -204,6 +205,43 @@ public sealed class MainCommandModule : CommandModuleBase
         }
     }
 
+    [Command("give")]
+    [CommandInfo("Gives you a block or item", "/get <item> <amount>")]
+    [IssuerScope(CommandIssuers.Client)]
+    [RequirePermission(op: true, permissions: "obsidian.give")]
+    public Task GiveAsync(string item) => GiveAsync(item, 64);
+
+    [CommandOverload]
+    public async Task GiveAsync(string item, int amount = 64)
+    {
+        if (this.Player is not Player player)
+            return;
+
+        // convert snake_case to PascalCase
+        if(item.Contains('_'))
+        {
+            var parts = item.Split('_');
+            item = string.Join("", parts.Select(x => $"{x[0].ToString().ToUpperInvariant()}{x.Substring(1)}"));
+        }
+        // find material from string (enum Material)
+        if (Enum.TryParse<Material>(item, out Material material))
+        {
+            var slot = player.Inventory.AddItem(new ItemStack(material, count: amount));
+            await player.SendMessageAsync($"Given you {ChatColor.Gold}{amount} {item}(s)");
+            player.client.SendPacket(new ContainerSetSlotPacket
+            {
+                Slot = (short)slot,
+                ContainerId = 0,
+                SlotData = player.Inventory.GetItem(slot)!,
+                StateId = player.Inventory.StateId++
+            });
+        }
+        else
+        {
+            await player.SendMessageAsync($"{ChatColor.Red}Invalid item: {item}");
+        }
+    }
+
     [Command("gamemode")]
     [CommandInfo("Change your gamemode.", "/gamemode <survival/creative/adventure/spectator>")]
     [IssuerScope(CommandIssuers.Client)]
@@ -351,7 +389,7 @@ public sealed class MainCommandModule : CommandModuleBase
             while (true)
             {
                 frogge.SetHeadRotation(new Angle((byte)(Random.Shared.Next(1, 255))));
-                frogge.SetRotation(new Angle((byte)(Random.Shared.Next(1, 255))), new Angle((byte)(Random.Shared.Next(1, 255))), false);
+                frogge.SetRotation(new Angle((byte)(Random.Shared.Next(1, 255))), new Angle((byte)(Random.Shared.Next(1, 255))), MovementFlags.None);
 
                 await Task.Delay(15);
             }

@@ -1,7 +1,6 @@
 ﻿using Obsidian.SourceGenerators.Registry.Models;
 using System.Diagnostics;
 using System.Text.Json;
-using System.Xml.Linq;
 
 namespace Obsidian.SourceGenerators.Registry;
 public partial class RegistryAssetsGenerator
@@ -30,7 +29,7 @@ public partial class RegistryAssetsGenerator
             .Using("Obsidian.API.Registry.Codecs.PaintingVariant")
             .Using("System.Collections.Frozen")
             .Line()
-            .Namespace("Obsidian.Registries")
+            .Namespace("Obsidian.API.Registries")
             .Line()
             .Type("public static partial class CodecRegistry");
 
@@ -64,6 +63,11 @@ public partial class RegistryAssetsGenerator
                 if (value.ValueKind == JsonValueKind.Object)
                 {
                     builder.ParseProperty(value, ctx);
+                    return;
+                }
+                else if (value.ValueKind == JsonValueKind.Array)
+                {
+                    builder.ParseArray(value, ctx);
                     return;
                 }
 
@@ -101,11 +105,11 @@ public partial class RegistryAssetsGenerator
 
                 if (value.ValueKind == JsonValueKind.Object)
                 {
-                    builder.ParseProperty(value, ctx, name == "OverrideArmorMaterials");
+                    builder.ParseProperty(value, ctx, name == "OverrideArmorAssets");
                     return;
                 }
 
-                builder.AppendValueType(value, ctx, name == "OverrideArmorMaterials");
+                builder.AppendValueType(value, ctx, name == "OverrideArmorAssets");
             }, ctx);
 
         builder.GenerateSimpleCodec(codecs["trim_pattern"].ToArray(), "TrimPattern", "minecraft:trim_pattern", "TrimPatternCodec", ctx);

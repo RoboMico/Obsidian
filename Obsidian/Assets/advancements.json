@@ -530,6 +530,22 @@
         },
         "trigger": "minecraft:location"
       },
+      "minecraft:pale_garden": {
+        "conditions": {
+          "player": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "location": {
+                  "biomes": "minecraft:pale_garden"
+                }
+              }
+            }
+          ]
+        },
+        "trigger": "minecraft:location"
+      },
       "minecraft:plains": {
         "conditions": {
           "player": [
@@ -1013,6 +1029,9 @@
         "minecraft:cherry_grove"
       ],
       [
+        "minecraft:pale_garden"
+      ],
+      [
         "minecraft:frozen_peaks"
       ],
       [
@@ -1035,9 +1054,12 @@
     "criteria": {
       "arbalistic": {
         "conditions": {
+          "fired_from_weapon": {
+            "items": "minecraft:crossbow"
+          },
           "unique_entity_types": 5
         },
-        "trigger": "minecraft:killed_by_crossbow"
+        "trigger": "minecraft:killed_by_arrow"
       }
     },
     "display": {
@@ -1413,7 +1435,8 @@
             }
           ],
           "minecraft:hide_additional_tooltip": {},
-          "minecraft:item_name": "{\"color\":\"gold\",\"translate\":\"block.minecraft.ominous_banner\"}"
+          "minecraft:item_name": "{\"translate\":\"block.minecraft.ominous_banner\"}",
+          "minecraft:rarity": "uncommon"
         },
         "count": 1,
         "id": "minecraft:white_banner"
@@ -1514,6 +1537,20 @@
               "entity": "this",
               "predicate": {
                 "type": "minecraft:cave_spider"
+              }
+            }
+          ]
+        },
+        "trigger": "minecraft:player_killed_entity"
+      },
+      "minecraft:creaking": {
+        "conditions": {
+          "entity": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "type": "minecraft:creaking"
               }
             }
           ]
@@ -1996,6 +2033,9 @@
         "minecraft:cave_spider"
       ],
       [
+        "minecraft:creaking"
+      ],
+      [
         "minecraft:creeper"
       ],
       [
@@ -2150,6 +2190,20 @@
               "entity": "this",
               "predicate": {
                 "type": "minecraft:cave_spider"
+              }
+            }
+          ]
+        },
+        "trigger": "minecraft:player_killed_entity"
+      },
+      "minecraft:creaking": {
+        "conditions": {
+          "entity": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "type": "minecraft:creaking"
               }
             }
           ]
@@ -2623,6 +2677,7 @@
         "minecraft:bogged",
         "minecraft:breeze",
         "minecraft:cave_spider",
+        "minecraft:creaking",
         "minecraft:creeper",
         "minecraft:drowned",
         "minecraft:elder_guardian",
@@ -2889,7 +2944,7 @@
               "tags": [
                 {
                   "expected": true,
-                  "id": "minecraft:is_player_attack"
+                  "id": "minecraft:mace_smash"
                 }
               ]
             },
@@ -3997,6 +4052,9 @@
     "criteria": {
       "two_birds": {
         "conditions": {
+          "fired_from_weapon": {
+            "items": "minecraft:crossbow"
+          },
           "victims": [
             [
               {
@@ -4018,7 +4076,7 @@
             ]
           ]
         },
-        "trigger": "minecraft:killed_by_crossbow"
+        "trigger": "minecraft:killed_by_arrow"
       }
     },
     "display": {
@@ -4144,9 +4202,6 @@
                 "equipment": {
                   "head": {
                     "components": {
-                      "minecraft:attribute_modifiers": {
-                        "modifiers": []
-                      },
                       "minecraft:banner_patterns": [
                         {
                           "color": "cyan",
@@ -4181,15 +4236,7 @@
                           "pattern": "minecraft:border"
                         }
                       ],
-                      "minecraft:enchantments": {
-                        "levels": {}
-                      },
-                      "minecraft:hide_additional_tooltip": {},
-                      "minecraft:item_name": "{\"color\":\"gold\",\"translate\":\"block.minecraft.ominous_banner\"}",
-                      "minecraft:lore": [],
-                      "minecraft:max_stack_size": 16,
-                      "minecraft:rarity": "common",
-                      "minecraft:repair_cost": 0
+                      "minecraft:item_name": "{\"translate\":\"block.minecraft.ominous_banner\"}"
                     },
                     "items": "minecraft:white_banner"
                   }
@@ -4243,7 +4290,8 @@
             }
           ],
           "minecraft:hide_additional_tooltip": {},
-          "minecraft:item_name": "{\"color\":\"gold\",\"translate\":\"block.minecraft.ominous_banner\"}"
+          "minecraft:item_name": "{\"translate\":\"block.minecraft.ominous_banner\"}",
+          "minecraft:rarity": "uncommon"
         },
         "count": 1,
         "id": "minecraft:white_banner"
@@ -4310,6 +4358,9 @@
     "criteria": {
       "kill_pillager": {
         "conditions": {
+          "fired_from_weapon": {
+            "items": "minecraft:crossbow"
+          },
           "victims": [
             [
               {
@@ -4322,7 +4373,7 @@
             ]
           ]
         },
-        "trigger": "minecraft:killed_by_crossbow"
+        "trigger": "minecraft:killed_by_arrow"
       }
     },
     "display": {
@@ -6661,7 +6712,7 @@
               "entity": "this",
               "predicate": {
                 "vehicle": {
-                  "type": "minecraft:boat",
+                  "type": "#minecraft:boat",
                   "passenger": {
                     "type": "minecraft:goat"
                   }
@@ -7577,7 +7628,7 @@
                 "predicate": {
                   "equipment": {
                     "head": {
-                      "items": "minecraft:golden_helmet"
+                      "items": "#minecraft:piglin_safe_armor"
                     }
                   }
                 }
@@ -7591,7 +7642,7 @@
                 "predicate": {
                   "equipment": {
                     "chest": {
-                      "items": "minecraft:golden_chestplate"
+                      "items": "#minecraft:piglin_safe_armor"
                     }
                   }
                 }
@@ -7605,7 +7656,7 @@
                 "predicate": {
                   "equipment": {
                     "legs": {
-                      "items": "minecraft:golden_leggings"
+                      "items": "#minecraft:piglin_safe_armor"
                     }
                   }
                 }
@@ -7619,7 +7670,7 @@
                 "predicate": {
                   "equipment": {
                     "feet": {
-                      "items": "minecraft:golden_boots"
+                      "items": "#minecraft:piglin_safe_armor"
                     }
                   }
                 }
@@ -7655,7 +7706,7 @@
                 "predicate": {
                   "equipment": {
                     "head": {
-                      "items": "minecraft:golden_helmet"
+                      "items": "#minecraft:piglin_safe_armor"
                     }
                   }
                 }
@@ -7669,7 +7720,7 @@
                 "predicate": {
                   "equipment": {
                     "chest": {
-                      "items": "minecraft:golden_chestplate"
+                      "items": "#minecraft:piglin_safe_armor"
                     }
                   }
                 }
@@ -7683,7 +7734,7 @@
                 "predicate": {
                   "equipment": {
                     "legs": {
-                      "items": "minecraft:golden_leggings"
+                      "items": "#minecraft:piglin_safe_armor"
                     }
                   }
                 }
@@ -7697,7 +7748,7 @@
                 "predicate": {
                   "equipment": {
                     "feet": {
-                      "items": "minecraft:golden_boots"
+                      "items": "#minecraft:piglin_safe_armor"
                     }
                   }
                 }
@@ -11336,6 +11387,70 @@
     "rewards": {
       "recipes": [
         "minecraft:chiseled_red_sandstone_from_red_sandstone_stonecutting"
+      ]
+    }
+  },
+  "minecraft:recipes/building_blocks/chiseled_resin_bricks": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_resin_brick_slab": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:resin_brick_slab"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:chiseled_resin_bricks"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_resin_brick_slab"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:chiseled_resin_bricks"
+      ]
+    }
+  },
+  "minecraft:recipes/building_blocks/chiseled_resin_bricks_from_resin_bricks_stonecutting": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_resin_bricks": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:resin_bricks"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:chiseled_resin_bricks_from_resin_bricks_stonecutting"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_resin_bricks"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:chiseled_resin_bricks_from_resin_bricks_stonecutting"
       ]
     }
   },
@@ -19587,6 +19702,134 @@
       ]
     }
   },
+  "minecraft:recipes/building_blocks/pale_oak_planks": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_log": {
+        "conditions": {
+          "items": [
+            {
+              "items": "#minecraft:pale_oak_logs"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:pale_oak_planks"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_log"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:pale_oak_planks"
+      ]
+    }
+  },
+  "minecraft:recipes/building_blocks/pale_oak_slab": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_planks": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:pale_oak_planks"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:pale_oak_slab"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_planks"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:pale_oak_slab"
+      ]
+    }
+  },
+  "minecraft:recipes/building_blocks/pale_oak_stairs": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_planks": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:pale_oak_planks"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:pale_oak_stairs"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_planks"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:pale_oak_stairs"
+      ]
+    }
+  },
+  "minecraft:recipes/building_blocks/pale_oak_wood": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_log": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:pale_oak_log"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:pale_oak_wood"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_log"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:pale_oak_wood"
+      ]
+    }
+  },
   "minecraft:recipes/building_blocks/pink_concrete_powder": {
     "parent": "minecraft:recipes/root",
     "criteria": {
@@ -23207,6 +23450,198 @@
       ]
     }
   },
+  "minecraft:recipes/building_blocks/resin_block": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_resin_clump": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:resin_clump"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:resin_block"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_resin_clump"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:resin_block"
+      ]
+    }
+  },
+  "minecraft:recipes/building_blocks/resin_bricks": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_resin_brick": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:resin_brick"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:resin_bricks"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_resin_brick"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:resin_bricks"
+      ]
+    }
+  },
+  "minecraft:recipes/building_blocks/resin_brick_slab": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_resin_bricks": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:resin_bricks"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:resin_brick_slab"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_resin_bricks"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:resin_brick_slab"
+      ]
+    }
+  },
+  "minecraft:recipes/building_blocks/resin_brick_slab_from_resin_bricks_stonecutting": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_resin_bricks": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:resin_bricks"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:resin_brick_slab_from_resin_bricks_stonecutting"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_resin_bricks"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:resin_brick_slab_from_resin_bricks_stonecutting"
+      ]
+    }
+  },
+  "minecraft:recipes/building_blocks/resin_brick_stairs": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_resin_bricks": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:resin_bricks"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:resin_brick_stairs"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_resin_bricks"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:resin_brick_stairs"
+      ]
+    }
+  },
+  "minecraft:recipes/building_blocks/resin_brick_stairs_from_resin_bricks_stonecutting": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_resin_bricks": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:resin_bricks"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:resin_brick_stairs_from_resin_bricks_stonecutting"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_resin_bricks"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:resin_brick_stairs_from_resin_bricks_stonecutting"
+      ]
+    }
+  },
   "minecraft:recipes/building_blocks/sandstone": {
     "parent": "minecraft:recipes/root",
     "criteria": {
@@ -24901,6 +25336,38 @@
     "rewards": {
       "recipes": [
         "minecraft:stripped_oak_wood"
+      ]
+    }
+  },
+  "minecraft:recipes/building_blocks/stripped_pale_oak_wood": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_log": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:stripped_pale_oak_log"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:stripped_pale_oak_wood"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_log"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:stripped_pale_oak_wood"
       ]
     }
   },
@@ -29382,7 +29849,7 @@
         "conditions": {
           "items": [
             {
-              "items": "minecraft:diamond"
+              "items": "#minecraft:diamond_tool_materials"
             }
           ]
         },
@@ -29542,7 +30009,7 @@
         "conditions": {
           "items": [
             {
-              "items": "minecraft:gold_ingot"
+              "items": "#minecraft:gold_tool_materials"
             }
           ]
         },
@@ -29702,7 +30169,7 @@
         "conditions": {
           "items": [
             {
-              "items": "minecraft:iron_ingot"
+              "items": "#minecraft:iron_tool_materials"
             }
           ]
         },
@@ -29905,7 +30372,7 @@
         "conditions": {
           "items": [
             {
-              "items": "minecraft:netherite_ingot"
+              "items": "#minecraft:netherite_tool_materials"
             }
           ]
         },
@@ -29937,7 +30404,7 @@
         "conditions": {
           "items": [
             {
-              "items": "minecraft:netherite_ingot"
+              "items": "#minecraft:netherite_tool_materials"
             }
           ]
         },
@@ -29969,7 +30436,7 @@
         "conditions": {
           "items": [
             {
-              "items": "minecraft:netherite_ingot"
+              "items": "#minecraft:netherite_tool_materials"
             }
           ]
         },
@@ -30001,7 +30468,7 @@
         "conditions": {
           "items": [
             {
-              "items": "minecraft:netherite_ingot"
+              "items": "#minecraft:netherite_tool_materials"
             }
           ]
         },
@@ -30033,7 +30500,7 @@
         "conditions": {
           "items": [
             {
-              "items": "minecraft:netherite_ingot"
+              "items": "#minecraft:netherite_tool_materials"
             }
           ]
         },
@@ -30997,6 +31464,38 @@
       ]
     }
   },
+  "minecraft:recipes/decorations/black_shulker_box": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_shulker_box": {
+        "conditions": {
+          "items": [
+            {
+              "items": "#minecraft:shulker_boxes"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:black_shulker_box"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_shulker_box"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:black_shulker_box"
+      ]
+    }
+  },
   "minecraft:recipes/decorations/black_stained_glass_pane": {
     "parent": "minecraft:recipes/root",
     "criteria": {
@@ -31261,6 +31760,38 @@
     "rewards": {
       "recipes": [
         "minecraft:blue_glazed_terracotta"
+      ]
+    }
+  },
+  "minecraft:recipes/decorations/blue_shulker_box": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_shulker_box": {
+        "conditions": {
+          "items": [
+            {
+              "items": "#minecraft:shulker_boxes"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:blue_shulker_box"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_shulker_box"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:blue_shulker_box"
       ]
     }
   },
@@ -31560,6 +32091,38 @@
     "rewards": {
       "recipes": [
         "minecraft:brown_glazed_terracotta"
+      ]
+    }
+  },
+  "minecraft:recipes/decorations/brown_shulker_box": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_shulker_box": {
+        "conditions": {
+          "items": [
+            {
+              "items": "#minecraft:shulker_boxes"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:brown_shulker_box"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_shulker_box"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:brown_shulker_box"
       ]
     }
   },
@@ -32365,6 +32928,38 @@
     "rewards": {
       "recipes": [
         "minecraft:cyan_glazed_terracotta"
+      ]
+    }
+  },
+  "minecraft:recipes/decorations/cyan_shulker_box": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_shulker_box": {
+        "conditions": {
+          "items": [
+            {
+              "items": "#minecraft:shulker_boxes"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:cyan_shulker_box"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_shulker_box"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:cyan_shulker_box"
       ]
     }
   },
@@ -33542,6 +34137,38 @@
       ]
     }
   },
+  "minecraft:recipes/decorations/gray_shulker_box": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_shulker_box": {
+        "conditions": {
+          "items": [
+            {
+              "items": "#minecraft:shulker_boxes"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:gray_shulker_box"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_shulker_box"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:gray_shulker_box"
+      ]
+    }
+  },
   "minecraft:recipes/decorations/gray_stained_glass_pane": {
     "parent": "minecraft:recipes/root",
     "criteria": {
@@ -33774,6 +34401,38 @@
     "rewards": {
       "recipes": [
         "minecraft:green_glazed_terracotta"
+      ]
+    }
+  },
+  "minecraft:recipes/decorations/green_shulker_box": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_shulker_box": {
+        "conditions": {
+          "items": [
+            {
+              "items": "#minecraft:shulker_boxes"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:green_shulker_box"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_shulker_box"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:green_shulker_box"
       ]
     }
   },
@@ -34343,6 +35002,38 @@
       ]
     }
   },
+  "minecraft:recipes/decorations/light_blue_shulker_box": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_shulker_box": {
+        "conditions": {
+          "items": [
+            {
+              "items": "#minecraft:shulker_boxes"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:light_blue_shulker_box"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_shulker_box"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:light_blue_shulker_box"
+      ]
+    }
+  },
   "minecraft:recipes/decorations/light_blue_stained_glass_pane": {
     "parent": "minecraft:recipes/root",
     "criteria": {
@@ -34578,6 +35269,38 @@
       ]
     }
   },
+  "minecraft:recipes/decorations/light_gray_shulker_box": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_shulker_box": {
+        "conditions": {
+          "items": [
+            {
+              "items": "#minecraft:shulker_boxes"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:light_gray_shulker_box"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_shulker_box"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:light_gray_shulker_box"
+      ]
+    }
+  },
   "minecraft:recipes/decorations/light_gray_stained_glass_pane": {
     "parent": "minecraft:recipes/root",
     "criteria": {
@@ -34810,6 +35533,38 @@
     "rewards": {
       "recipes": [
         "minecraft:lime_glazed_terracotta"
+      ]
+    }
+  },
+  "minecraft:recipes/decorations/lime_shulker_box": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_shulker_box": {
+        "conditions": {
+          "items": [
+            {
+              "items": "#minecraft:shulker_boxes"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:lime_shulker_box"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_shulker_box"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:lime_shulker_box"
       ]
     }
   },
@@ -35109,6 +35864,38 @@
     "rewards": {
       "recipes": [
         "minecraft:magenta_glazed_terracotta"
+      ]
+    }
+  },
+  "minecraft:recipes/decorations/magenta_shulker_box": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_shulker_box": {
+        "conditions": {
+          "items": [
+            {
+              "items": "#minecraft:shulker_boxes"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:magenta_shulker_box"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_shulker_box"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:magenta_shulker_box"
       ]
     }
   },
@@ -35859,6 +36646,38 @@
       ]
     }
   },
+  "minecraft:recipes/decorations/orange_shulker_box": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_shulker_box": {
+        "conditions": {
+          "items": [
+            {
+              "items": "#minecraft:shulker_boxes"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:orange_shulker_box"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_shulker_box"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:orange_shulker_box"
+      ]
+    }
+  },
   "minecraft:recipes/decorations/orange_stained_glass_pane": {
     "parent": "minecraft:recipes/root",
     "criteria": {
@@ -35963,6 +36782,134 @@
     "rewards": {
       "recipes": [
         "minecraft:painting"
+      ]
+    }
+  },
+  "minecraft:recipes/decorations/pale_moss_carpet": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_pale_moss_block": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:pale_moss_block"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:pale_moss_carpet"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_pale_moss_block"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:pale_moss_carpet"
+      ]
+    }
+  },
+  "minecraft:recipes/decorations/pale_oak_fence": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_planks": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:pale_oak_planks"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:pale_oak_fence"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_planks"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:pale_oak_fence"
+      ]
+    }
+  },
+  "minecraft:recipes/decorations/pale_oak_hanging_sign": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_stripped_logs": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:stripped_pale_oak_log"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:pale_oak_hanging_sign"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_stripped_logs"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:pale_oak_hanging_sign"
+      ]
+    }
+  },
+  "minecraft:recipes/decorations/pale_oak_sign": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_planks": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:pale_oak_planks"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:pale_oak_sign"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_planks"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:pale_oak_sign"
       ]
     }
   },
@@ -36123,6 +37070,38 @@
     "rewards": {
       "recipes": [
         "minecraft:pink_glazed_terracotta"
+      ]
+    }
+  },
+  "minecraft:recipes/decorations/pink_shulker_box": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_shulker_box": {
+        "conditions": {
+          "items": [
+            {
+              "items": "#minecraft:shulker_boxes"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:pink_shulker_box"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_shulker_box"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:pink_shulker_box"
       ]
     }
   },
@@ -36841,6 +37820,38 @@
       ]
     }
   },
+  "minecraft:recipes/decorations/purple_shulker_box": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_shulker_box": {
+        "conditions": {
+          "items": [
+            {
+              "items": "#minecraft:shulker_boxes"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:purple_shulker_box"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_shulker_box"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:purple_shulker_box"
+      ]
+    }
+  },
   "minecraft:recipes/decorations/purple_stained_glass_pane": {
     "parent": "minecraft:recipes/root",
     "criteria": {
@@ -37204,6 +38215,38 @@
       ]
     }
   },
+  "minecraft:recipes/decorations/red_shulker_box": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_shulker_box": {
+        "conditions": {
+          "items": [
+            {
+              "items": "#minecraft:shulker_boxes"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:red_shulker_box"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_shulker_box"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:red_shulker_box"
+      ]
+    }
+  },
   "minecraft:recipes/decorations/red_stained_glass_pane": {
     "parent": "minecraft:recipes/root",
     "criteria": {
@@ -37276,6 +38319,70 @@
     "rewards": {
       "recipes": [
         "minecraft:red_stained_glass_pane_from_glass_pane"
+      ]
+    }
+  },
+  "minecraft:recipes/decorations/resin_brick_wall": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_resin_bricks": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:resin_bricks"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:resin_brick_wall"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_resin_bricks"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:resin_brick_wall"
+      ]
+    }
+  },
+  "minecraft:recipes/decorations/resin_brick_wall_from_resin_bricks_stonecutting": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_resin_bricks": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:resin_bricks"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:resin_brick_wall_from_resin_bricks_stonecutting"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_resin_bricks"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:resin_brick_wall_from_resin_bricks_stonecutting"
       ]
     }
   },
@@ -38335,6 +39442,38 @@
       ]
     }
   },
+  "minecraft:recipes/decorations/white_shulker_box": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_shulker_box": {
+        "conditions": {
+          "items": [
+            {
+              "items": "#minecraft:shulker_boxes"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:white_shulker_box"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_shulker_box"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:white_shulker_box"
+      ]
+    }
+  },
   "minecraft:recipes/decorations/white_stained_glass_pane": {
     "parent": "minecraft:recipes/root",
     "criteria": {
@@ -38567,6 +39706,38 @@
     "rewards": {
       "recipes": [
         "minecraft:yellow_glazed_terracotta"
+      ]
+    }
+  },
+  "minecraft:recipes/decorations/yellow_shulker_box": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_shulker_box": {
+        "conditions": {
+          "items": [
+            {
+              "items": "#minecraft:shulker_boxes"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:yellow_shulker_box"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_shulker_box"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:yellow_shulker_box"
       ]
     }
   },
@@ -39905,6 +41076,518 @@
       ]
     }
   },
+  "minecraft:recipes/food/suspicious_stew_from_allium": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_allium": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:allium"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:suspicious_stew_from_allium"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_allium"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:suspicious_stew_from_allium"
+      ]
+    }
+  },
+  "minecraft:recipes/food/suspicious_stew_from_azure_bluet": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_azure_bluet": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:azure_bluet"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:suspicious_stew_from_azure_bluet"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_azure_bluet"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:suspicious_stew_from_azure_bluet"
+      ]
+    }
+  },
+  "minecraft:recipes/food/suspicious_stew_from_blue_orchid": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_blue_orchid": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:blue_orchid"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:suspicious_stew_from_blue_orchid"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_blue_orchid"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:suspicious_stew_from_blue_orchid"
+      ]
+    }
+  },
+  "minecraft:recipes/food/suspicious_stew_from_closed_eyeblossom": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_closed_eyeblossom": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:closed_eyeblossom"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:suspicious_stew_from_closed_eyeblossom"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_closed_eyeblossom"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:suspicious_stew_from_closed_eyeblossom"
+      ]
+    }
+  },
+  "minecraft:recipes/food/suspicious_stew_from_cornflower": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_cornflower": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:cornflower"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:suspicious_stew_from_cornflower"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_cornflower"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:suspicious_stew_from_cornflower"
+      ]
+    }
+  },
+  "minecraft:recipes/food/suspicious_stew_from_dandelion": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_dandelion": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:dandelion"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:suspicious_stew_from_dandelion"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_dandelion"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:suspicious_stew_from_dandelion"
+      ]
+    }
+  },
+  "minecraft:recipes/food/suspicious_stew_from_lily_of_the_valley": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_lily_of_the_valley": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:lily_of_the_valley"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:suspicious_stew_from_lily_of_the_valley"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_lily_of_the_valley"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:suspicious_stew_from_lily_of_the_valley"
+      ]
+    }
+  },
+  "minecraft:recipes/food/suspicious_stew_from_open_eyeblossom": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_open_eyeblossom": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:open_eyeblossom"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:suspicious_stew_from_open_eyeblossom"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_open_eyeblossom"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:suspicious_stew_from_open_eyeblossom"
+      ]
+    }
+  },
+  "minecraft:recipes/food/suspicious_stew_from_orange_tulip": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_orange_tulip": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:orange_tulip"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:suspicious_stew_from_orange_tulip"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_orange_tulip"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:suspicious_stew_from_orange_tulip"
+      ]
+    }
+  },
+  "minecraft:recipes/food/suspicious_stew_from_oxeye_daisy": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_oxeye_daisy": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:oxeye_daisy"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:suspicious_stew_from_oxeye_daisy"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_oxeye_daisy"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:suspicious_stew_from_oxeye_daisy"
+      ]
+    }
+  },
+  "minecraft:recipes/food/suspicious_stew_from_pink_tulip": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_pink_tulip": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:pink_tulip"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:suspicious_stew_from_pink_tulip"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_pink_tulip"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:suspicious_stew_from_pink_tulip"
+      ]
+    }
+  },
+  "minecraft:recipes/food/suspicious_stew_from_poppy": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_poppy": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:poppy"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:suspicious_stew_from_poppy"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_poppy"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:suspicious_stew_from_poppy"
+      ]
+    }
+  },
+  "minecraft:recipes/food/suspicious_stew_from_red_tulip": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_red_tulip": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:red_tulip"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:suspicious_stew_from_red_tulip"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_red_tulip"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:suspicious_stew_from_red_tulip"
+      ]
+    }
+  },
+  "minecraft:recipes/food/suspicious_stew_from_torchflower": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:suspicious_stew_from_torchflower"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      },
+      "has_torchflower": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:torchflower"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_torchflower"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:suspicious_stew_from_torchflower"
+      ]
+    }
+  },
+  "minecraft:recipes/food/suspicious_stew_from_white_tulip": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:suspicious_stew_from_white_tulip"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      },
+      "has_white_tulip": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:white_tulip"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_white_tulip"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:suspicious_stew_from_white_tulip"
+      ]
+    }
+  },
+  "minecraft:recipes/food/suspicious_stew_from_wither_rose": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:suspicious_stew_from_wither_rose"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      },
+      "has_wither_rose": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:wither_rose"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_wither_rose"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:suspicious_stew_from_wither_rose"
+      ]
+    }
+  },
   "minecraft:recipes/misc/beacon": {
     "parent": "minecraft:recipes/root",
     "criteria": {
@@ -40222,6 +41905,38 @@
     "rewards": {
       "recipes": [
         "minecraft:book"
+      ]
+    }
+  },
+  "minecraft:recipes/misc/bordure_indented_banner_pattern": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:bordure_indented_banner_pattern"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      },
+      "has_vines": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:vine"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_vines"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:bordure_indented_banner_pattern"
       ]
     }
   },
@@ -40930,6 +42645,38 @@
       ]
     }
   },
+  "minecraft:recipes/misc/creaking_heart": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_resin_block": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:resin_block"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:creaking_heart"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_resin_block"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:creaking_heart"
+      ]
+    }
+  },
   "minecraft:recipes/misc/creeper_banner_pattern": {
     "parent": "minecraft:recipes/root",
     "criteria": {
@@ -41514,6 +43261,38 @@
     "rewards": {
       "recipes": [
         "minecraft:eye_armor_trim_smithing_template_smithing_trim"
+      ]
+    }
+  },
+  "minecraft:recipes/misc/field_masoned_banner_pattern": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_bricks": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:bricks"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:field_masoned_banner_pattern"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_bricks"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:field_masoned_banner_pattern"
       ]
     }
   },
@@ -42331,6 +44110,38 @@
     "rewards": {
       "recipes": [
         "minecraft:gray_dye"
+      ]
+    }
+  },
+  "minecraft:recipes/misc/gray_dye_from_closed_eyeblossom": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_closed_eyeblossom": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:closed_eyeblossom"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:gray_dye_from_closed_eyeblossom"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_closed_eyeblossom"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:gray_dye_from_closed_eyeblossom"
       ]
     }
   },
@@ -44159,6 +45970,38 @@
       ]
     }
   },
+  "minecraft:recipes/misc/orange_dye_from_open_eyeblossom": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_open_eyeblossom": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:open_eyeblossom"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:orange_dye_from_open_eyeblossom"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_open_eyeblossom"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:orange_dye_from_open_eyeblossom"
+      ]
+    }
+  },
   "minecraft:recipes/misc/orange_dye_from_orange_tulip": {
     "parent": "minecraft:recipes/root",
     "criteria": {
@@ -44893,6 +46736,70 @@
     "rewards": {
       "recipes": [
         "minecraft:red_dye_from_tulip"
+      ]
+    }
+  },
+  "minecraft:recipes/misc/resin_brick": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_resin_clump": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:resin_clump"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:resin_brick"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_resin_clump"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:resin_brick"
+      ]
+    }
+  },
+  "minecraft:recipes/misc/resin_clump": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_resin_block": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:resin_block"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:resin_clump"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_resin_block"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:resin_clump"
       ]
     }
   },
@@ -48160,6 +50067,166 @@
       ]
     }
   },
+  "minecraft:recipes/redstone/pale_oak_button": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_planks": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:pale_oak_planks"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:pale_oak_button"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_planks"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:pale_oak_button"
+      ]
+    }
+  },
+  "minecraft:recipes/redstone/pale_oak_door": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_planks": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:pale_oak_planks"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:pale_oak_door"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_planks"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:pale_oak_door"
+      ]
+    }
+  },
+  "minecraft:recipes/redstone/pale_oak_fence_gate": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_planks": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:pale_oak_planks"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:pale_oak_fence_gate"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_planks"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:pale_oak_fence_gate"
+      ]
+    }
+  },
+  "minecraft:recipes/redstone/pale_oak_pressure_plate": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_planks": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:pale_oak_planks"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:pale_oak_pressure_plate"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_planks"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:pale_oak_pressure_plate"
+      ]
+    }
+  },
+  "minecraft:recipes/redstone/pale_oak_trapdoor": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_planks": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:pale_oak_planks"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:pale_oak_trapdoor"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_planks"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:pale_oak_trapdoor"
+      ]
+    }
+  },
   "minecraft:recipes/redstone/piston": {
     "parent": "minecraft:recipes/root",
     "criteria": {
@@ -49291,6 +51358,102 @@
       ]
     }
   },
+  "minecraft:recipes/tools/black_bundle": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_black_dye": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:black_dye"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:black_bundle"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_black_dye"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:black_bundle"
+      ]
+    }
+  },
+  "minecraft:recipes/tools/blue_bundle": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_blue_dye": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:blue_dye"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:blue_bundle"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_blue_dye"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:blue_bundle"
+      ]
+    }
+  },
+  "minecraft:recipes/tools/brown_bundle": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_brown_dye": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:brown_dye"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:brown_bundle"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_brown_dye"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:brown_bundle"
+      ]
+    }
+  },
   "minecraft:recipes/tools/brush": {
     "parent": "minecraft:recipes/root",
     "criteria": {
@@ -49320,6 +51483,38 @@
     "rewards": {
       "recipes": [
         "minecraft:brush"
+      ]
+    }
+  },
+  "minecraft:recipes/tools/bundle": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_string": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:string"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:bundle"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_string"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:bundle"
       ]
     }
   },
@@ -49387,6 +51582,38 @@
       ]
     }
   },
+  "minecraft:recipes/tools/cyan_bundle": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_cyan_dye": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:cyan_dye"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:cyan_bundle"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_cyan_dye"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:cyan_bundle"
+      ]
+    }
+  },
   "minecraft:recipes/tools/diamond_axe": {
     "parent": "minecraft:recipes/root",
     "criteria": {
@@ -49394,7 +51621,7 @@
         "conditions": {
           "items": [
             {
-              "items": "minecraft:diamond"
+              "items": "#minecraft:diamond_tool_materials"
             }
           ]
         },
@@ -49426,7 +51653,7 @@
         "conditions": {
           "items": [
             {
-              "items": "minecraft:diamond"
+              "items": "#minecraft:diamond_tool_materials"
             }
           ]
         },
@@ -49458,7 +51685,7 @@
         "conditions": {
           "items": [
             {
-              "items": "minecraft:diamond"
+              "items": "#minecraft:diamond_tool_materials"
             }
           ]
         },
@@ -49490,7 +51717,7 @@
         "conditions": {
           "items": [
             {
-              "items": "minecraft:diamond"
+              "items": "#minecraft:diamond_tool_materials"
             }
           ]
         },
@@ -49597,7 +51824,7 @@
         "conditions": {
           "items": [
             {
-              "items": "minecraft:gold_ingot"
+              "items": "#minecraft:gold_tool_materials"
             }
           ]
         },
@@ -49629,7 +51856,7 @@
         "conditions": {
           "items": [
             {
-              "items": "minecraft:gold_ingot"
+              "items": "#minecraft:gold_tool_materials"
             }
           ]
         },
@@ -49661,7 +51888,7 @@
         "conditions": {
           "items": [
             {
-              "items": "minecraft:gold_ingot"
+              "items": "#minecraft:gold_tool_materials"
             }
           ]
         },
@@ -49693,7 +51920,7 @@
         "conditions": {
           "items": [
             {
-              "items": "minecraft:gold_ingot"
+              "items": "#minecraft:gold_tool_materials"
             }
           ]
         },
@@ -49718,6 +51945,70 @@
       ]
     }
   },
+  "minecraft:recipes/tools/gray_bundle": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_gray_dye": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:gray_dye"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:gray_bundle"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_gray_dye"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:gray_bundle"
+      ]
+    }
+  },
+  "minecraft:recipes/tools/green_bundle": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_green_dye": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:green_dye"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:green_bundle"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_green_dye"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:green_bundle"
+      ]
+    }
+  },
   "minecraft:recipes/tools/iron_axe": {
     "parent": "minecraft:recipes/root",
     "criteria": {
@@ -49725,7 +52016,7 @@
         "conditions": {
           "items": [
             {
-              "items": "minecraft:iron_ingot"
+              "items": "#minecraft:iron_tool_materials"
             }
           ]
         },
@@ -49757,7 +52048,7 @@
         "conditions": {
           "items": [
             {
-              "items": "minecraft:iron_ingot"
+              "items": "#minecraft:iron_tool_materials"
             }
           ]
         },
@@ -49789,7 +52080,7 @@
         "conditions": {
           "items": [
             {
-              "items": "minecraft:iron_ingot"
+              "items": "#minecraft:iron_tool_materials"
             }
           ]
         },
@@ -49821,7 +52112,7 @@
         "conditions": {
           "items": [
             {
-              "items": "minecraft:iron_ingot"
+              "items": "#minecraft:iron_tool_materials"
             }
           ]
         },
@@ -49878,6 +52169,134 @@
       ]
     }
   },
+  "minecraft:recipes/tools/light_blue_bundle": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_light_blue_dye": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:light_blue_dye"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:light_blue_bundle"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_light_blue_dye"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:light_blue_bundle"
+      ]
+    }
+  },
+  "minecraft:recipes/tools/light_gray_bundle": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_light_gray_dye": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:light_gray_dye"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:light_gray_bundle"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_light_gray_dye"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:light_gray_bundle"
+      ]
+    }
+  },
+  "minecraft:recipes/tools/lime_bundle": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_lime_dye": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:lime_dye"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:lime_bundle"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_lime_dye"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:lime_bundle"
+      ]
+    }
+  },
+  "minecraft:recipes/tools/magenta_bundle": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_magenta_dye": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:magenta_dye"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:magenta_bundle"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_magenta_dye"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:magenta_bundle"
+      ]
+    }
+  },
   "minecraft:recipes/tools/netherite_axe_smithing": {
     "parent": "minecraft:recipes/root",
     "criteria": {
@@ -49885,7 +52304,7 @@
         "conditions": {
           "items": [
             {
-              "items": "minecraft:netherite_ingot"
+              "items": "#minecraft:netherite_tool_materials"
             }
           ]
         },
@@ -49917,7 +52336,7 @@
         "conditions": {
           "items": [
             {
-              "items": "minecraft:netherite_ingot"
+              "items": "#minecraft:netherite_tool_materials"
             }
           ]
         },
@@ -49949,7 +52368,7 @@
         "conditions": {
           "items": [
             {
-              "items": "minecraft:netherite_ingot"
+              "items": "#minecraft:netherite_tool_materials"
             }
           ]
         },
@@ -49981,7 +52400,7 @@
         "conditions": {
           "items": [
             {
-              "items": "minecraft:netherite_ingot"
+              "items": "#minecraft:netherite_tool_materials"
             }
           ]
         },
@@ -50003,6 +52422,102 @@
     "rewards": {
       "recipes": [
         "minecraft:netherite_shovel_smithing"
+      ]
+    }
+  },
+  "minecraft:recipes/tools/orange_bundle": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_orange_dye": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:orange_dye"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:orange_bundle"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_orange_dye"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:orange_bundle"
+      ]
+    }
+  },
+  "minecraft:recipes/tools/pink_bundle": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_pink_dye": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:pink_dye"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:pink_bundle"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_pink_dye"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:pink_bundle"
+      ]
+    }
+  },
+  "minecraft:recipes/tools/purple_bundle": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_purple_dye": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:purple_dye"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:purple_bundle"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_purple_dye"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:purple_bundle"
       ]
     }
   },
@@ -50035,6 +52550,38 @@
     "rewards": {
       "recipes": [
         "minecraft:recovery_compass"
+      ]
+    }
+  },
+  "minecraft:recipes/tools/red_bundle": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_red_dye": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:red_dye"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:red_bundle"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_red_dye"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:red_bundle"
       ]
     }
   },
@@ -50230,6 +52777,38 @@
       ]
     }
   },
+  "minecraft:recipes/tools/white_bundle": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:white_bundle"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      },
+      "has_white_dye": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:white_dye"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_white_dye"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:white_bundle"
+      ]
+    }
+  },
   "minecraft:recipes/tools/wooden_axe": {
     "parent": "minecraft:recipes/root",
     "criteria": {
@@ -50355,6 +52934,38 @@
     "rewards": {
       "recipes": [
         "minecraft:wooden_shovel"
+      ]
+    }
+  },
+  "minecraft:recipes/tools/yellow_bundle": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:yellow_bundle"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      },
+      "has_yellow_dye": {
+        "conditions": {
+          "items": [
+            {
+              "items": "minecraft:yellow_dye"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_yellow_dye"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:yellow_bundle"
       ]
     }
   },
@@ -51059,6 +53670,66 @@
     "rewards": {
       "recipes": [
         "minecraft:oak_chest_boat"
+      ]
+    }
+  },
+  "minecraft:recipes/transportation/pale_oak_boat": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:pale_oak_boat"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      },
+      "in_water": {
+        "conditions": {
+          "block": "minecraft:water"
+        },
+        "trigger": "minecraft:enter_block"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "in_water"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:pale_oak_boat"
+      ]
+    }
+  },
+  "minecraft:recipes/transportation/pale_oak_chest_boat": {
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+      "has_boat": {
+        "conditions": {
+          "items": [
+            {
+              "items": "#minecraft:boats"
+            }
+          ]
+        },
+        "trigger": "minecraft:inventory_changed"
+      },
+      "has_the_recipe": {
+        "conditions": {
+          "recipe": "minecraft:pale_oak_chest_boat"
+        },
+        "trigger": "minecraft:recipe_unlocked"
+      }
+    },
+    "requirements": [
+      [
+        "has_the_recipe",
+        "has_boat"
+      ]
+    ],
+    "rewards": {
+      "recipes": [
+        "minecraft:pale_oak_chest_boat"
       ]
     }
   },

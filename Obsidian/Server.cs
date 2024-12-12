@@ -1,24 +1,21 @@
 using Microsoft.AspNetCore.Connections;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Obsidian.API.Boss;
-using Obsidian.API.Builders;
 using Obsidian.API.Configuration;
 using Obsidian.API.Crafting;
 using Obsidian.API.Events;
 using Obsidian.API.Utilities;
-using Obsidian.Commands;
 using Obsidian.Commands.Framework;
 using Obsidian.Commands.Framework.Entities;
 using Obsidian.Concurrency;
 using Obsidian.Entities;
-using Obsidian.Events;
 using Obsidian.Net;
 using Obsidian.Net.Packets;
+using Obsidian.Net.Packets.Common;
 using Obsidian.Net.Packets.Play.Clientbound;
 using Obsidian.Net.Packets.Play.Serverbound;
 using Obsidian.Net.Rcon;
@@ -31,7 +28,6 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 
@@ -56,7 +52,7 @@ public sealed partial class Server : IServer
         }
     }
 #endif
-    public const ProtocolVersion DefaultProtocol = ProtocolVersion.v1_21;
+    public const ProtocolVersion DefaultProtocol = ProtocolVersion.v1_21_4;
 
     public const string PersistentDataPath = "persistentdata";
     public const string PermissionPath = "permissions";
@@ -64,16 +60,27 @@ public sealed partial class Server : IServer
     internal static readonly ConcurrentDictionary<string, DateTimeOffset> throttler = new();
 
     internal readonly CancellationTokenSource _cancelTokenSource;
+    internal readonly ILogger _logger;
 
-    private readonly ConcurrentQueue<IClientboundPacket> _chatMessagesQueue = new();
+    internal byte[] BrandData
+    {
+        get
+        {
+            using var ms = new MinecraftStream();
+            ms.WriteString(this.Brand);
+
+            return ms.ToArray();
+        }
+    }
+
+    private readonly ConcurrentQueue<ClientboundPacket> _chatMessagesQueue = new();
     private readonly ConcurrentHashSet<Client> _clients = new();
     private readonly ILoggerFactory loggerFactory;
     private readonly RconServer _rconServer;
     private readonly IUserCache userCache;
-    internal readonly ILogger _logger;
     private readonly IServiceProvider serviceProvider;
+    private readonly IDisposable? configWatcher;
 
-    private IDisposable? configWatcher;
     private IConnectionListener? _tcpListener;
 
     public IOptionsMonitor<WhitelistConfiguration> WhitelistConfiguration { get; }
@@ -102,7 +109,7 @@ public sealed partial class Server : IServer
     public IWorld DefaultWorld => WorldManager.DefaultWorld;
     public IEnumerable<IPlayer> Players => GetPlayers();
 
-    
+
 
     /// <summary>
     /// Creates a new instance of <see cref="Server"/>.
@@ -140,7 +147,7 @@ public sealed partial class Server : IServer
 
         CommandsHandler = commandHandler;
 
-        PluginManager = new PluginManager(this.serviceProvider, this, eventDispatcher, CommandsHandler, loggerFactory.CreateLogger<PluginManager>(), 
+        PluginManager = new PluginManager(this.serviceProvider, this, eventDispatcher, CommandsHandler, loggerFactory.CreateLogger<PluginManager>(),
             serviceProvider.GetRequiredService<IConfiguration>());
 
         _logger.LogDebug("Registering events & commands...");
@@ -218,17 +225,17 @@ public sealed partial class Server : IServer
     /// </summary>
     public void BroadcastMessage(ChatMessage message)
     {
-        _chatMessagesQueue.Enqueue(new SystemChatMessagePacket(message, false));
+        _chatMessagesQueue.Enqueue(new SystemChatPacket(message, false));
         _logger.LogInformation(message.Text);
     }
 
     /// <summary>
     /// Sends a message to all players on this server.
     /// </summary>
-    public void BroadcastMessage(PlayerChatMessagePacket message)
+    public void BroadcastMessage(PlayerChatPacket message)
     {
         _chatMessagesQueue.Enqueue(message);
-        _logger.LogInformation("{}", message.Header.PlainMessage);
+        _logger.LogInformation("{}", message.UnsignedContent);
     }
 
     /// <summary>
@@ -238,7 +245,7 @@ public sealed partial class Server : IServer
     {
         var chatMessage = ChatMessage.Simple(message);
 
-        _chatMessagesQueue.Enqueue(new SystemChatMessagePacket(chatMessage, false));
+        _chatMessagesQueue.Enqueue(new SystemChatPacket(chatMessage, false));
         _logger.LogInformation(message);
     }
 
@@ -300,8 +307,13 @@ public sealed partial class Server : IServer
         _logger.LogInformation("Server loaded in {time}", loadTimeStopwatch.Elapsed);
 
         //Wait for worlds to load
-        while (!this.WorldManager.ReadyToJoin && !this._cancelTokenSource.IsCancellationRequested)
+        while (!this.WorldManager.ReadyToJoin)
+        {
+            if (this._cancelTokenSource.IsCancellationRequested)
+                return;
+
             continue;
+        }
 
         await this.PluginManager.OnServerReadyAsync();
 
@@ -311,9 +323,9 @@ public sealed partial class Server : IServer
         {
             await Task.WhenAll(serverTasks);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // Maybe write a crash log to somewhere?
+            _logger.LogError(ex, "An error has occured");
             throw;
         }
         finally
@@ -350,6 +362,7 @@ public sealed partial class Server : IServer
                 }
                 connection = acceptedConnection;
 
+                //TODO send a disconnect message
                 if (!WorldManager.ReadyToJoin)
                 {
                     connection.Abort();
@@ -441,7 +454,7 @@ public sealed partial class Server : IServer
 
     public async Task ExecuteCommand(string input)
     {
-        var context = new CommandContext(CommandHelpers.DefaultPrefix + input, 
+        var context = new CommandContext(CommandHelpers.DefaultPrefix + input,
             new CommandSender(CommandIssuers.Console, null, _logger), null, this);
 
         try
@@ -454,7 +467,13 @@ public sealed partial class Server : IServer
         }
     }
 
-    internal IEnumerable<Player> PlayersInRange(World world, Vector worldPosition) => world.Players.Select(entry => entry.Value).Where(player => player.client.LoadedChunks.Contains(worldPosition.ToChunkCoord()));
+    internal IEnumerable<Player> PlayersInRange(World world, Vector worldPosition)
+    {
+        var (x, z) = worldPosition.ToChunkCoord();
+
+        var packedXZ = NumericsHelper.IntsToLong(x, z);
+        return world.Players.Select(entry => entry.Value).Where(player => player.LoadedChunks.Contains(packedXZ));
+    }
 
     internal void BroadcastBlockChange(World world, IBlock block, Vector location)
     {
@@ -477,18 +496,18 @@ public sealed partial class Server : IServer
         }
     }
 
-    internal async Task HandleIncomingMessageAsync(ChatMessagePacket packet, Client source, MessageType type = MessageType.Chat)
+    internal async Task HandleIncomingMessageAsync(ChatPacket packet, Client source, MessageType type = MessageType.Chat)
     {
         const string format = "<{0}> {1}";//TODO use this????
         var message = packet.Message;
 
-        if(type is MessageType.Chat or MessageType.System)
+        if (type is MessageType.Chat or MessageType.System)
         {
             await this.EventDispatcher.ExecuteEventAsync(new IncomingChatMessageEventArgs(source.Player, this, message, format));
         }
     }
 
-    internal async Task QueueBroadcastPacketAsync(IClientboundPacket packet)
+    internal async Task QueueBroadcastPacketAsync(ClientboundPacket packet)
     {
         foreach (Player player in Players)
             await player.client.QueuePacketAsync(packet);
@@ -552,10 +571,13 @@ public sealed partial class Server : IServer
                 keepAliveTicks++;
                 if (keepAliveTicks > (Configuration.Network.KeepAliveInterval / 50)) // to clarify: one tick is 50 milliseconds. 50 * 200 = 10000 millis means 10 seconds
                 {
-                    var keepAliveTime = DateTimeOffset.Now;
-
                     foreach (var client in _clients.Where(x => x.State == ClientState.Play || x.State == ClientState.Configuration))
-                        client.SendKeepAlive(keepAliveTime);
+                    {
+                        if (client.State == ClientState.Play)
+                            await KeepAlivePacket.ClientboundPlay.HandleAsync(client);
+                        else
+                            await KeepAlivePacket.ClientboundConfiguration.HandleAsync(client);
+                    }
 
                     keepAliveTicks = 0;
                 }
@@ -565,13 +587,13 @@ public sealed partial class Server : IServer
                     foreach (Player player in Players)
                     {
                         var soundPosition = new SoundPosition(player.Position.X, player.Position.Y, player.Position.Z);
-                        await player.SendSoundAsync(SoundEffectBuilder.Create(SoundId.EntitySheepAmbient)
-                            .WithSoundPosition(soundPosition)
-                            .Build());
+                        //await player.SendSoundAsync(SoundEffectBuilder.Create(SoundId.EntitySheepAmbient)
+                        //    .WithSoundPosition(soundPosition)
+                        //    .Build());
                     }
                 }
 
-                while (_chatMessagesQueue.TryDequeue(out IClientboundPacket packet))
+                while (_chatMessagesQueue.TryDequeue(out ClientboundPacket packet))
                 {
                     foreach (Player player in Players)
                     {
@@ -585,8 +607,6 @@ public sealed partial class Server : IServer
                 stopwatch.Restart();
                 tpsMeasure.PushMeasurement(elapsedTicks);
                 Tps = tpsMeasure.Tps;
-
-                UpdateStatusConsole();
             }
         }
         catch (OperationCanceledException)
@@ -596,17 +616,39 @@ public sealed partial class Server : IServer
 
         foreach (var client in _clients)
         {
-            client.SendPacket(new DisconnectPacket(ChatMessage.Simple("Server closed"), client.State));
+            if (client.State == ClientState.Play)
+                client.SendPacket(DisconnectPacket.ClientboundPlay with { Reason = ChatMessage.Simple("Server closed") });
+            else if (client.State == ClientState.Configuration)
+                client.SendPacket(DisconnectPacket.ClientboundConfiguration with { Reason = ChatMessage.Simple("Server closed") });
         }
 
         _logger.LogInformation("The game loop has been stopped");
         await WorldManager.FlushLoadedWorldsAsync();
     }
+    
+    public bool IsWhitedlisted(string username) => this.WhitelistConfiguration.CurrentValue.WhitelistedPlayers.Any(x => x.Name == username);
 
-    internal void UpdateStatusConsole()
+    public bool IsWhitedlisted(Guid uuid) => this.WhitelistConfiguration.CurrentValue.WhitelistedPlayers.Any(x => x.Id == uuid);
+
+    public async ValueTask<bool> ShouldThrottleAsync(Client client)
     {
-        var status = $"    tps:{Tps} c:{WorldManager.GeneratingChunkCount}/{WorldManager.LoadedChunkCount} r:{WorldManager.RegionCount}";
-        ConsoleIO.UpdateStatusLine(status);
+        if (!this.Configuration.Network.ShouldThrottle)
+            return false;
+
+        if (!throttler.TryGetValue(client.Ip!, out var timeLeft))
+        {
+            throttler.TryAdd(client.Ip!, DateTimeOffset.UtcNow.AddMilliseconds(this.Configuration.Network.ConnectionThrottle));
+            return false;
+        }
+
+        if (DateTimeOffset.UtcNow < timeLeft)
+        {
+            this._logger.LogDebug("{ip} has been throttled for reconnecting too fast.", client.Ip!);
+            await client.DisconnectAsync("Connection Throttled! Please wait before reconnecting.");
+            return true;
+        }
+
+        return false;
     }
 
     public void Dispose()

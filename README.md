@@ -17,7 +17,7 @@ Feel free to join our [Discord](https://discord.gg/gQBtqyXChu) if you're curious
 - [x] Basic chunk loading
 - [x] Block breaking/placing
 - [x] Other gamemodes besides creative
-- [ ] Usable storage and crafting blocks
+- [x] Usable storage and crafting blocks
 - [x] Low memory usage
 - [x] Inventory management
 - [x] Daylight and weather cycle
@@ -32,11 +32,11 @@ Read about how you can contribute [here](https://github.com/ObsidianMC/Documenta
 
 ## 🔌 Develop plugins
 Plugins are cool! Wanna make them yourself?
-Find out about plugin development [here](https://github.com/ObsidianMC/Documentation/blob/master/articles/plugins.md)
+Find out about plugin development [here](https://docs.obsidianmc.net/articles/contrib.html)
 
 ## 🔥 Development builds
 Very early development builds are available over at the [GitHub Actions](https://github.com/ObsidianMC/Obsidian/actions) page for this repository.
-- Ensure you have the latest [.NET Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/7.0) installed
+- Ensure you have the latest [.NET Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/9.0) installed
 - Find the latest `.NET Build` [action](https://github.com/ObsidianMC/Obsidian/actions?query=branch%3Amaster) and scroll to the bottom of the page to find the artifacts.
 - Unzip the artifact and run `dotnet ObsidianApp.dll` to start the server.
 - On first run, a config file is generated. Fill this file with your preferenced values and run the previous command again.
@@ -69,9 +69,11 @@ There's also docker-compose support.
 - [Jonpro03](https://github.com/Jonpro03) (developer)
 
 ## 💕 Thank-you's
-Thank you to [`#mcdevs`](https://wiki.vg/MCDevs) for additional support.
+Thank you to [`#mcdevs`](https://minecraft.wiki/w/Minecraft_Wiki:Projects/wiki.vg_merge/MCDevs) for additional support.
 
-Thank you to [Wiki.vg](https://wiki.vg/) for documenting Minecraft's protocol.
+Thank you to [TkTech](https://tkte.ch/) for hosting [Wiki.vg](https://tkte.ch/articles/2024/11/11/sunsetting.html) and for the [`#mcdevs`](https://minecraft.wiki/w/Minecraft_Wiki:Projects/wiki.vg_merge/MCDevs) community documenting Minecraft's protocol.
+
+Thank you to the [Minecraft Wiki](https://minecraft.wiki) for continuing to host Wiki.vg's contents after the site shut down [[1](https://minecraft.wiki/w/Minecraft_Wiki:Projects/wiki.vg_merge)] [[2](https://tkte.ch/articles/2024/11/11/sunsetting.html)], as well as providing further resources on Minecraft's inner workings.
 
 Thank you to Mojang for creating this wonderful game named [Minecraft](https://www.minecraft.net).
 
