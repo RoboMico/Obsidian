@@ -1,6 +1,7 @@
 ﻿global using Obsidian.API;
 global using Obsidian.API.World.Features;
 global using Obsidian.API.Registries;
+global using Obsidian.Registries;
 global using Obsidian.Utilities;
 global using System;
 global using System.Collections.Concurrent;
