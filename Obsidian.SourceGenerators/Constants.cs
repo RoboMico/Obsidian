@@ -18,4 +18,5 @@ internal static class Constants
 
     public const string defaultBlock = "default_block";
     public const string defaultFluid = "default_fluid";
+    public const string blockResult = "result_state";
 }

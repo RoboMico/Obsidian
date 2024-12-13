@@ -46,7 +46,7 @@
 		
 		<AdditionalFiles Include="..\Obsidian\Assets\Codecs\**\*.json" LinkBase="Assets\Codecs\" />
 
-		<AdditionalFiles Include="..\Obsidian\Assets\worldgen\**\*.*" LinkBase="Assets\worldgen\"/>
+		<AdditionalFiles Include="..\Obsidian\Assets\worldgen\**\*.*" LinkBase="Assets\worldgen\" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis.CSharp;
 using Obsidian.SourceGenerators.Registry.Models;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using static Obsidian.SourceGenerators.Constants;
 
 namespace Obsidian.SourceGenerators.Registry;
@@ -97,7 +98,7 @@ public sealed partial class WorldgenNoiseRegistryGenerator : IIncrementalGenerat
         var worldgenProperties = new Dictionary<string, TypeInformation>();
         var staticDensityFunctions = new Dictionary<string, string>();
         var noiseTypes = new Dictionary<string, string>();
-        
+        var surfaceConditions = new Dictionary<string, string>();
 
         foreach (var @class in classes)
         {
@@ -128,7 +129,7 @@ public sealed partial class WorldgenNoiseRegistryGenerator : IIncrementalGenerat
             noiseTypes.Add(identifier, callableName);
         }
 
-        var cleanedNoises = new CleanedNoises(worldgenProperties, staticDensityFunctions, noiseTypes);
+        var cleanedNoises = new CleanedNoises(worldgenProperties, staticDensityFunctions, noiseTypes, surfaceConditions);
 
         InitSection("Noises", context, (CodeBuilder builder) => BuildNoise(cleanedNoises, noises, builder));
         InitSection("DensityFunctions", context, (CodeBuilder builder) => BuildDensityFunctions(cleanedNoises, noises, builder));
@@ -144,7 +145,7 @@ public sealed partial class WorldgenNoiseRegistryGenerator : IIncrementalGenerat
            .Using("Obsidian.API.World.Generator.Noise")
            .Using("Obsidian.API.World.Generator.SurfaceRules")
            .Using("System.Collections.Frozen")
-           .Namespace("Obsidian.API.Registries.Noise")
+           .Namespace("Obsidian.API.Registries")
            .Line()
            .Type("public static partial class NoiseRegistry");
 
@@ -152,7 +153,7 @@ public sealed partial class WorldgenNoiseRegistryGenerator : IIncrementalGenerat
 
         builder.EndScope();
 
-        context.AddSource($"NoiseRegistry.{sectionName}.g.cs", builder.ToString());
+        context.AddSource($"{sectionName}.g.cs", builder.ToString());
     }
 
     private static bool IsAttribute(string? value) =>

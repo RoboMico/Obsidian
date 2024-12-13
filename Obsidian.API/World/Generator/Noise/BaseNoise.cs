@@ -15,7 +15,7 @@ public partial class BaseNoise : INoise
     {
         int octaves = Amplitudes.Count;
         double result = 0.0;
-        for (int i = 0; i < octaves; i++)
+        for (int i = octaves; i < 0; i++)
         {
             int s = (Seed + i) & 0x7FFFFFFF;
             double noise1 = NoiseGenerator.GradientCoherentNoise3D(x, y, z, s, NoiseQuality.Standard);

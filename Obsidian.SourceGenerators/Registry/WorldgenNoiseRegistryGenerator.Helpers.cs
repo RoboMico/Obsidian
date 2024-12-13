@@ -35,41 +35,27 @@ public partial class WorldgenNoiseRegistryGenerator
 
                             if (numbers.Contains(property.Type.Name))
                             {
-                                builder.AppendNumber(elementName, element, property.Type.Name, newLine);
+                                builder.Line($"{elementName.ToPascalCase()} = {element}, ");
                                 break;
                             }
                         }
                     }
 
-                    builder.Indent().Append($"{elementName.ToPascalCase()} = new ConstantDensityFunction {{ Argument = ");
-                    builder.AppendUnknownNumber(element, false);
-                    builder.Append("}, ").Line();
-
+                    builder.Line($"{elementName.ToPascalCase()} = new ConstantDensityFunction {{ Argument = {element} }}, ");
                     break;
                 }
 
-                builder.Indent().Append($"{elementName.ToPascalCase()} = ");
-
-                builder.AppendUnknownNumber(element, false);
-
-                builder.Line();
+                builder.Line($"{elementName.ToPascalCase()} = {element},");
                 break;
             case JsonValueKind.Array:
                 var hasObjects = element.EnumerateArray().FirstOrDefault().ValueKind == JsonValueKind.Object;
 
-                if (hasObjects)
-                    builder.Indent().Append($"{elementName.ToPascalCase()} =").Line().Indent().Append("[");
-                else
-                    builder.Indent().Append($"{elementName.ToPascalCase()} = [");
+                builder.Array($"{elementName.ToPascalCase()} =");
 
                 foreach (var arrayItem in element.EnumerateArray())
                     AppendArrayItem(cleanedNoises, arrayItem, builder, hasObjects);
 
-                if (hasObjects)
-                    builder.Line("],");
-                else
-                    builder.Append("],").Line();
-
+                builder.EndArrayScope(",", false);
                 break;
             case JsonValueKind.True:
             case JsonValueKind.False:
@@ -77,10 +63,10 @@ public partial class WorldgenNoiseRegistryGenerator
                 break;
             default:
                 {
-                    if (TryAppendTypeProperty(cleanedNoises, elementName, element, builder, newLine))
+                    if (TryAppendStateProperty(elementName, element, builder))
                         break;
 
-                    if (TryAppendStateProperty(elementName, element, builder))
+                    if (TryAppendTypeProperty(cleanedNoises, elementName, element, builder, newLine))
                         break;
 
                     builder.Type($"{elementName.ToPascalCase()} = new()");
@@ -104,10 +90,10 @@ public partial class WorldgenNoiseRegistryGenerator
         switch (element.ValueKind)
         {
             case JsonValueKind.String:
-                builder.Append($"\"{element.GetString()}\", ");
+                builder.Line($"\"{element.GetString()}\", ");
                 break;
             case JsonValueKind.Number:
-                builder.AppendUnknownNumber(element, false);
+                builder.Line($"{element},");
                 break;
             case JsonValueKind.Array:
                 //builder.Append($"[, ");
@@ -125,7 +111,7 @@ public partial class WorldgenNoiseRegistryGenerator
                     if (TryAppendTypeProperty(cleanedNoises, null, element, builder, hasObjects))
                         break;
 
-                    builder.Line().Type("new()");
+                    builder.Type("new()");
 
                     foreach (var childProperty in element.EnumerateObject())
                     {
@@ -151,7 +137,7 @@ public partial class WorldgenNoiseRegistryGenerator
         if (element.ValueKind == JsonValueKind.String)
             typeName = element.GetString()!;
 
-        if (TryGetCallableName(cleanedNoises, typeName, out var callableName))
+        if (!cleanedNoises.WorldgenProperties.ContainsKey(typeName) && TryGetCallableName(cleanedNoises, typeName, out var callableName))
         {
             var name = elementName != null ? $"{elementName.ToPascalCase()} = {callableName}," :
                 string.Empty;
@@ -185,36 +171,45 @@ public partial class WorldgenNoiseRegistryGenerator
 
     private static bool TryAppendStateProperty(string elementName, JsonElement element, CodeBuilder builder)
     {
-        var isState = elementName is defaultBlock or defaultFluid;
+        var isState = elementName is defaultBlock or defaultFluid or blockResult;
 
         if (isState)
         {
-            builder.Indent().Append($"{elementName.ToPascalCase()} = new() {{ ");
+            builder.Type($"{elementName.ToPascalCase()} = new() ");
 
-            builder.Append($"Name = \"{element.GetProperty("Name")}\", ");
+            builder.Line($"Name = \"{element.GetProperty("Name")}\", ");
 
             if (element.TryGetProperty("Properties", out var props))
             {
-                builder.Append("Properties = new() { ");
+                builder.Type("Properties = new Dictionary<string, string>()");
 
                 foreach (var prop in props.EnumerateObject())
                 {
                     var childName = prop.Name;
                     var childValue = prop.Value;
 
-                    builder.Append($" {{ \"{childName}\", \"{childValue.GetString()}\" }}, ");
+                    builder.Line($" {{ \"{childName}\", \"{childValue.GetString()}\" }}, ");
                 }
 
-                builder.Append("}");
+                builder.EndScope(false);
             }
 
-            builder.Append("}, ").Line();
+            builder.EndScope(",", false);
         }
 
         return isState;
     }
 
-    private static bool TryGetCallableName(CleanedNoises cleanedNoises, string typeName, out string callableName) =>
-        cleanedNoises.StaticDensityFunctions.TryGetValue(typeName, out callableName) ||
-        cleanedNoises.NoiseTypes.TryGetValue(typeName, out callableName);
+    private static bool TryGetCallableName(CleanedNoises cleanedNoises, string typeName, out string callableName)
+    {
+        //if(cleanedNoises.WorldgenProperties.TryGetValue(typeName, out var typeInfo) && !cleanedNoises.StaticDensityFunctions.ContainsKey(typeName))
+        //{
+        //    callableName = typeName;
+        //    return true;
+        //}
+
+        return cleanedNoises.StaticDensityFunctions.TryGetValue(typeName, out callableName) || cleanedNoises.NoiseTypes.TryGetValue(typeName, out callableName);
+    }
+
+
 }

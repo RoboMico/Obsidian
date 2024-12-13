@@ -20,7 +20,6 @@ using Obsidian.Net.Packets.Play.Clientbound;
 using Obsidian.Net.Packets.Play.Serverbound;
 using Obsidian.Net.Rcon;
 using Obsidian.Plugins;
-using Obsidian.Registries;
 using Obsidian.Services;
 using Obsidian.WorldData;
 using System.Diagnostics;

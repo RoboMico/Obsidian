@@ -1,17 +1,64 @@
 ﻿using Obsidian.API;
 using Obsidian.API.Noise;
+using Obsidian.API.Registries.Noise;
 using Obsidian.WorldData.Generators.Overworld;
 using SharpNoise;
 using SharpNoise.Builders;
+using SharpNoise.Modules;
 using SharpNoise.Utilities.Imaging;
 using System.Threading.Tasks;
 using Xunit;
+
 
 namespace Obsidian.Tests;
 
 public class Noise
 {
     private OverworldTerrainNoise noiseGen = new OverworldTerrainNoise(0);
+
+    private class TestNoiseModule(int sourceModuleCount) : Module(sourceModuleCount)
+    {
+        public override double GetValue(double x, double y, double z) => NoiseRegistry.NoiseSettings.Overworld.NoiseRouter.Continents.GetValue(x, y, z);
+    }
+
+   [Fact(DisplayName = "Mojang Continents", Timeout = 10000)]
+    public void Run()
+    {
+        NoiseCube nc = new();
+        NoiseMap nm = new();
+
+        LinearNoiseCubeBuilder lncb = new()
+        {
+            DestNoiseCube = nc,
+            SourceModule = new TestNoiseModule(1)
+        };
+        lncb.SetBounds(0, 1600, -64, 320, 0, 1200);
+        lncb.SetDestSize(1600, 384, 1200);
+        lncb.Build();
+
+        HeightNoiseMapBuilder dnmb = new()
+        {
+            DestNoiseMap = nm,
+            SourceNoiseCube = nc
+        };
+        dnmb.SetDestSize(1600, 1200);
+        dnmb.Build();
+
+        Image img = new();
+        ImageRenderer transitionsRenderer = new()
+        {
+            SourceNoiseMap = nm,
+            DestinationImage = img
+        };
+
+        transitionsRenderer.BuildTerrainGradient();
+        transitionsRenderer.Render();
+
+        var bmp = transitionsRenderer.DestinationImage.ToGdiBitmap();
+        bmp.Save("_terrain.bmp");
+
+        Assert.Equal(0, 0);
+    }
 
     [Fact(DisplayName = "Biomes", Timeout = 10000)]
     public async void BiomesAsync()
@@ -90,7 +137,7 @@ public class Noise
     [Fact(DisplayName = "Terrain", Timeout = 1000000)]
     public async void TerrainAsync()
     {
-        
+
         await Task.Run(() =>
         {
             NoiseCube nc = new();
