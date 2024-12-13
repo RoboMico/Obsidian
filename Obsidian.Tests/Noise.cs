@@ -32,7 +32,7 @@ public class Noise
             DestNoiseCube = nc,
             SourceModule = new TestNoiseModule(1)
         };
-        lncb.SetBounds(0, 1600, -64, 320, 0, 1200);
+        lncb.SetBounds(0, 1600, -1, 1, 0, 1200);
         lncb.SetDestSize(1600, 384, 1200);
         lncb.Build();
 
@@ -55,7 +55,7 @@ public class Noise
         transitionsRenderer.Render();
 
         var bmp = transitionsRenderer.DestinationImage.ToGdiBitmap();
-        bmp.Save("mojang_contintents.bmp");
+        bmp.Save("_mojang_contintents.bmp");
 
         Assert.Equal(0, 0);
     }

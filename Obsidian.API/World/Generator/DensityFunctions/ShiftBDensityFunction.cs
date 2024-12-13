@@ -7,5 +7,5 @@ public sealed class ShiftBDensityFunction : IDensityFunction
 
     public required INoise Argument { get; init; }
 
-    public double GetValue(double x, double y, double z) => Argument.GetValue(z/4D, x/4D, 0) * 4;
+    public double GetValue(double x, double y, double z) => Argument.GetValue(z / 4.0, x / 4.0, 0) * 4.0;
 }
