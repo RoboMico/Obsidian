@@ -3,9 +3,20 @@
 [DensityFunction("minecraft:flat_cache")]
 public sealed class FlatCacheDensityFunction : IDensityFunction
 {
+    private double cachedValue;
     public string Type => "minecraft:flat_cache";
 
     public required IDensityFunction Argument { get; init; }
 
-    public double GetValue(double x, double y, double z) => this.Argument.GetValue(x, y, z);
+    public double GetValue(double x, double y, double z)
+    {
+        if ((x % 4 == 0 && z % 4 == 0) || y == 0)
+        {
+            this.cachedValue = this.Argument.GetValue(x, y, z);
+
+            return this.cachedValue;
+        }
+
+        return this.cachedValue;
+    }
 }
