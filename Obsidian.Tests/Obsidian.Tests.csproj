@@ -29,10 +29,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Obsidian.Nbt\Obsidian.Nbt.csproj" />
 		<ProjectReference Include="..\Obsidian\Obsidian.csproj" />
-		<ProjectReference Include="..\Obsidian.API\Obsidian.API.csproj" />
-		<ProjectReference Include="..\Obsidian.SourceGenerators\Obsidian.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
 	</ItemGroup>
 
 </Project>

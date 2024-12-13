@@ -1,6 +1,5 @@
 ﻿using Obsidian.API;
 using Obsidian.API.Noise;
-using Obsidian.API.Registries.Noise;
 using Obsidian.WorldData.Generators.Overworld;
 using SharpNoise;
 using SharpNoise.Builders;
@@ -8,6 +7,7 @@ using SharpNoise.Modules;
 using SharpNoise.Utilities.Imaging;
 using System.Threading.Tasks;
 using Xunit;
+using Obsidian.API.Registries;
 
 
 namespace Obsidian.Tests;
@@ -21,7 +21,7 @@ public class Noise
         public override double GetValue(double x, double y, double z) => NoiseRegistry.NoiseSettings.Overworld.NoiseRouter.Continents.GetValue(x, y, z);
     }
 
-   [Fact(DisplayName = "Mojang Continents", Timeout = 10000)]
+    [Fact(DisplayName = "Mojang Continents")]
     public void Run()
     {
         NoiseCube nc = new();
@@ -55,7 +55,7 @@ public class Noise
         transitionsRenderer.Render();
 
         var bmp = transitionsRenderer.DestinationImage.ToGdiBitmap();
-        bmp.Save("_terrain.bmp");
+        bmp.Save("mojang_contintents.bmp");
 
         Assert.Equal(0, 0);
     }

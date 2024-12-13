@@ -9,7 +9,7 @@ public sealed class SplineDensityFunction : IDensityFunction
     public double GetValue(double x, double y, double z) => throw new NotImplementedException();
 }
 
-public readonly struct Spline  : ISpline
+public readonly struct Spline : ISpline
 {
     public required IDensityFunction Coordinate { get; init; }
 
@@ -18,10 +18,9 @@ public readonly struct Spline  : ISpline
 
 public interface ISpline
 {
-    public IDensityFunction Coordinate { get; init; }
 }
 
-public readonly struct SplineConstant
+public readonly struct SplineConstant : ISpline
 {
     public double Value { get; init; }
 }
