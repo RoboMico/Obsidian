@@ -14,7 +14,7 @@ public partial class WorldgenNoiseRegistryGenerator
         foreach (var value in noise)
         {
             var sanitizedName = value.Name.Replace(Noise, string.Empty).ToPascalCase();
-            builder.Type($"public static readonly BaseNoise {sanitizedName} = new()");
+            builder.Type($"public static BaseNoise {sanitizedName} => new()");
 
             foreach (var property in value.Properties)
             {

@@ -13,22 +13,24 @@ public partial class BaseNoise : INoise
 
     public double GetValue(double x, double y, double z)
     {
-        int octaves = Amplitudes.Count;
         double result = 0.0;
-        for (int i = octaves; i < 0; i++)
+        int octave = (int)FirstOctave;
+        for (int i = 0; i < Amplitudes.Count; i++)
         {
             int s = (Seed + i) & 0x7FFFFFFF;
             double noise1 = NoiseGenerator.GradientCoherentNoise3D(x, y, z, s, NoiseQuality.Standard);
-            double noise2 = NoiseGenerator.GradientCoherentNoise3D(x, y, z, s+octaves, NoiseQuality.Standard);
+            double noise2 = NoiseGenerator.GradientCoherentNoise3D(x, y, z, s + octave, NoiseQuality.Standard);
             double noise = noise1 + noise2 / 2.0D;
-            double persistence = Amplitudes[i] * Math.Pow(2, octaves - i - 1) / (Math.Pow(2, octaves) - 1);
+            double persistence = Amplitudes[i] * Math.Pow(2, octave - i - 1) / (Math.Pow(2, octave) - 1);
             result += noise * persistence;
-            double lacunarity = Math.Pow(2, -FirstOctave + i);
+            double lacunarity = Math.Pow(2, octave + i);
             x *= lacunarity;
             y *= lacunarity;
             z *= lacunarity;
+            octave = (int)FirstOctave + i;
         }
+        double returnVal = 10 * result / (3 * (1 + (1 / (Amplitudes.Count - 2))));
 
-        return 10 * result / (3 * (1 + (1 / (octaves - 2))));
+        return returnVal;
     }
 }

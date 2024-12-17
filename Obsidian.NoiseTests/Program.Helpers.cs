@@ -3,12 +3,13 @@ using SharpNoise;
 using SharpNoise.Builders;
 using SharpNoise.Modules;
 using SharpNoise.Utilities.Imaging;
+using Obsidian.API.Registries;
 
 public partial class Program
 {
     private class TestNoiseModule(int sourceModuleCount) : Module(sourceModuleCount)
     {
-        public override double GetValue(double x, double y, double z) =>0;
+        public override double GetValue(double x, double y, double z) => NoiseRegistry.NoiseSettings.Overworld.NoiseRouter.FinalDensity.GetValue(x, y, z);
     }
 
     private static void Test()

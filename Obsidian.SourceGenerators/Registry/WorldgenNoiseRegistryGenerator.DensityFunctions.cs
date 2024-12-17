@@ -51,7 +51,7 @@ public partial class WorldgenNoiseRegistryGenerator
                 {
                     if (function.Properties.Count == 0)
                     {
-                        builder.Type("public static readonly IDensityFunction Zero = new ConstantDensityFunction()");
+                        builder.Type("public static IDensityFunction Zero => new ConstantDensityFunction()");
 
                         builder.Line("Argument = 0.0d");
 
@@ -70,7 +70,7 @@ public partial class WorldgenNoiseRegistryGenerator
                     if (!cleanedNoises.WorldgenProperties.TryGetValue(functionTypeName, out var typeInformation))
                         continue;
 
-                    builder.Type($"public static readonly IDensityFunction {sanitizedName} = new {typeInformation.Symbol.Name}()");
+                    builder.Type($"public static IDensityFunction {sanitizedName} => new {typeInformation.Symbol.Name}()");
 
                     foreach (var property in function.Properties)
                     {
