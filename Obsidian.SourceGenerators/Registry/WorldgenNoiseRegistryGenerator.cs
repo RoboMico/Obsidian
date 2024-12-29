@@ -12,9 +12,6 @@ public sealed partial class WorldgenNoiseRegistryGenerator : IIncrementalGenerat
 
     public void Initialize(IncrementalGeneratorInitializationContext ctx)
     {
-        //if (!Debugger.IsAttached)
-        //    Debugger.Launch();
-
         var jsonFiles = ctx.AdditionalTextsProvider
            .Where(file => file.Path.Contains("worldgen") && file.Path.EndsWith(".json"))
            .Select(static (file, ct) =>

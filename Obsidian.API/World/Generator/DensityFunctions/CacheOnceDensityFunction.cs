@@ -7,5 +7,5 @@ public sealed class CacheOnceDensityFunction : IDensityFunction
 
     public required IDensityFunction Argument { get; init; }
 
-    public double GetValue(double x, double y, double z) => throw new NotImplementedException();
+    public double GetValue(double x, double y, double z) => Argument.GetValue(x, y, z);
 }

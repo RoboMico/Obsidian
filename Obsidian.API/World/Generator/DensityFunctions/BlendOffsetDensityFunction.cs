@@ -5,5 +5,5 @@ public sealed class BlendOffsetDensityFunction : IDensityFunction
 {
     public string Type => "minecraft:blend_offset";
 
-    public double GetValue(double x, double y, double z) => throw new NotImplementedException();
+    public double GetValue(double x, double y, double z) => 1.0;
 }

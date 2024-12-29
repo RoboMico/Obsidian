@@ -10,6 +10,8 @@ public sealed class FlatCacheDensityFunction : IDensityFunction
 
     public double GetValue(double x, double y, double z)
     {
+        return this.Argument.GetValue(x, y, z);
+        // cache needs to invalidate when x/y/z delta > 4
         if (x % 4 == 0 && z % 4 == 0)
         {
             if (y == 0 && this.cachedValue.HasValue)

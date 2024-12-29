@@ -4,47 +4,36 @@ using SharpNoise.Builders;
 using SharpNoise.Modules;
 using SharpNoise.Utilities.Imaging;
 using Obsidian.API.Registries;
+using Obsidian.API.World.Generator.Noise;
+using Obsidian.API;
 
 public partial class Program
 {
-    private class TestNoiseModule(int sourceModuleCount) : Module(sourceModuleCount)
+    private class Test2DNoiseModule(int sourceModuleCount) : Module(sourceModuleCount)
     {
-        public override double GetValue(double x, double y, double z) => NoiseRegistry.NoiseSettings.Overworld.NoiseRouter.FinalDensity.GetValue(x, y, z);
+        private readonly IDensityFunction fn = NoiseRegistry.NoiseSettings.Overworld.NoiseRouter.FinalDensity;
+        public override double GetValue(double x, double y, double z)
+        {
+            double val = fn.GetValue(x, y, z);
+            return val;
+        }
     }
 
     private static void Test()
     {
-        NoiseCube nc = new();
-        NoiseMap nm = new();
+        var noise = new Test2DNoiseModule(0);
+        var map = new NoiseMap();
+        var builder = new PlaneNoiseMapBuilder() { DestNoiseMap = map, SourceModule = noise };
 
-        LinearNoiseCubeBuilder lncb = new()
-        {
-            DestNoiseCube = nc,
-            SourceModule = new TestNoiseModule(1)
-        };
-        lncb.SetBounds(0, 1600, -64, 320, 0, 1200);
-        lncb.SetDestSize(1600, 384, 1200);
-        lncb.Build();
-
-        HeightNoiseMapBuilder dnmb = new()
-        {
-            DestNoiseMap = nm,
-            SourceNoiseCube = nc
-        };
-        dnmb.SetDestSize(1600, 1200);
-        dnmb.Build();
-
-        Image img = new();
-        ImageRenderer transitionsRenderer = new()
-        {
-            SourceNoiseMap = nm,
-            DestinationImage = img
-        };
-
+        var image = new Image();
+        var transitionsRenderer = new ImageRenderer() { SourceNoiseMap = map, DestinationImage = image };
         transitionsRenderer.BuildTerrainGradient();
+        builder.SetBounds(-960, 960, -540, 540);
+        builder.SetDestSize(960*2, 540*2);
+        builder.Build();
         transitionsRenderer.Render();
 
         var bmp = transitionsRenderer.DestinationImage.ToGdiBitmap();
-        bmp.Save("Continents.bmp");
+        bmp.Save("Noise.bmp");
     }
 }

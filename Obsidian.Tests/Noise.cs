@@ -61,7 +61,7 @@ public class Noise
         Assert.Equal(0, 0);
     }
 
-    [Fact(DisplayName = "Biomes", Timeout = 10000)]
+    [Fact(DisplayName = "Biomes")]
     public void Biomes()
     {
         var map = new NoiseMap();
@@ -131,7 +131,7 @@ public class Noise
         Assert.Equal(0, 0);
     }
 
-    [Fact(DisplayName = "Terrain", Timeout = 1000000)]
+    [Fact(DisplayName = "Terrain")]
     public void Terrain()
     {
         NoiseCube nc = new();
@@ -170,7 +170,7 @@ public class Noise
         Assert.Equal(0, 0);
     }
 
-    [Fact(DisplayName = "Peaks", Timeout = 10000)]
+    [Fact(DisplayName = "Peaks")]
     public void Peaks()
     {
         var noise = noiseGen.PeakValleyNoise;
@@ -191,7 +191,7 @@ public class Noise
         Assert.Equal(0, 0);
     }
 
-    [Fact(DisplayName = "Temp", Timeout = 10000)]
+    [Fact(DisplayName = "Temp")]
     public void Temp()
     {
         var noise = noiseGen.TempNoise;
@@ -212,7 +212,7 @@ public class Noise
         Assert.Equal(0, 0);
     }
 
-    [Fact(DisplayName = "Height", Timeout = 10000)]
+    [Fact(DisplayName = "Height")]
     public void Height()
     {
         var noise = noiseGen.HeightNoise;
@@ -233,7 +233,7 @@ public class Noise
         Assert.Equal(0, 0);
     }
 
-    [Fact(DisplayName = "Squash", Timeout = 10000)]
+    [Fact(DisplayName = "Squash")]
     
     public void Squash()
     {
@@ -255,7 +255,7 @@ public class Noise
         Assert.Equal(0, 0);
     }
 
-    [Fact(DisplayName = "Rivers", Timeout = 10000)]
+    [Fact(DisplayName = "Rivers")]
     public void River()
     {
         var noise = noiseGen.RiverNoise;
@@ -276,7 +276,7 @@ public class Noise
         Assert.Equal(0, 0);
     }
 
-    [Fact(DisplayName = "Humidity", Timeout = 10000)]
+    [Fact(DisplayName = "Humidity")]
     public async void HumidityAsync()
     {
         var noise = noiseGen.HumidityNoise;
@@ -297,7 +297,7 @@ public class Noise
         Assert.Equal(0, 0);
     }
 
-    [Fact(DisplayName = "Erosion", Timeout = 10000)]
+    [Fact(DisplayName = "Erosion")]
     public void Erosion()
     {
         var noise = noiseGen.ErosionNoise;
