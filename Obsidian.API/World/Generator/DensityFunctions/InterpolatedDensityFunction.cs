@@ -10,6 +10,28 @@ public sealed class InterpolatedDensityFunction : IDensityFunction
 
     public required IDensityFunction Argument { get; init; }
 
+    public double MinValue
+    {
+        get
+        {
+            int hscale = sizeHorizontal * 2;
+            int vscale = sizeVertical * 2;
+            int totalSamples = hscale * vscale * 4;
+            return Argument.MinValue * totalSamples / ((sizeHorizontal * 4) * (sizeVertical * 4));
+        }
+    }
+
+    public double MaxValue
+    {
+        get
+        {
+            int hscale = sizeHorizontal * 2;
+            int vscale = sizeVertical * 2;
+            int totalSamples = hscale * vscale * 4;
+            return Argument.MaxValue * totalSamples / ((sizeHorizontal * 4) * (sizeVertical * 4));
+        }
+    }
+
     public double GetValue(double x, double y, double z)
     {
         int hscale = sizeHorizontal * 2;

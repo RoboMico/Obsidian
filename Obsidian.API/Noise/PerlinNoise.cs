@@ -9,42 +9,18 @@ namespace Obsidian.API.Noise;
 
 public class PerlinNoise
 {
+    public readonly double MaxValue;
+
     private const int ROUND_OFF = 33554432;
     private readonly ImprovedNoise[] _noiseLevels;
     private readonly int _firstOctave;
     private readonly List<double> _amplitudes;
     private readonly double _lowestFreqValueFactor;
     private readonly double _lowestFreqInputFactor;
-    private readonly double _maxValue;
 
     public static PerlinNoise Create(Random randomSource, int firstOctave, List<double> amplitudes)
     {
         return new PerlinNoise(randomSource, Tuple.Create(firstOctave, amplitudes));
-    }
-
-    private static Tuple<int, List<double>> MakeAmplitudes(HashSet<int> octaves)
-    {
-        if (!octaves.Any())
-        {
-            throw new ArgumentException("Need some octaves!");
-        }
-
-        int minOctave = -octaves.Min();
-        int maxOctave = octaves.Max();
-        int totalOctaves = minOctave + maxOctave + 1;
-
-        if (totalOctaves < 1)
-        {
-            throw new ArgumentException("Total number of octaves needs to be >= 1");
-        }
-
-        var amplitudes = Enumerable.Repeat(0.0, totalOctaves).ToList();
-        foreach (var octave in octaves)
-        {
-            amplitudes[octave + minOctave] = 1.0;
-        }
-
-        return Tuple.Create(-minOctave, amplitudes);
     }
 
     private PerlinNoise(Random randomSource, Tuple<int, List<double>> configuration)
@@ -79,7 +55,7 @@ public class PerlinNoise
 
         _lowestFreqInputFactor = Math.Pow(2.0, -zeroOctaveIndex);
         _lowestFreqValueFactor = Math.Pow(2.0, totalOctaves - 1) / (Math.Pow(2.0, totalOctaves) - 1);
-        _maxValue = EdgeValue(2.0);
+        MaxValue = EdgeValue(2.0);
     }
 
     public double GetValue(double x, double y, double z)
@@ -87,7 +63,6 @@ public class PerlinNoise
         return GetValue(x, y, z, 0.0, 0.0, false);
     }
 
-    [Obsolete("Legacy method for backward compatibility.")]
     public double GetValue(double x, double y, double z, double offsetX, double offsetY, bool useOffset)
     {
         double result = 0.0;

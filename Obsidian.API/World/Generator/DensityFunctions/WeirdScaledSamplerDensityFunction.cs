@@ -11,5 +11,9 @@ public sealed class WeirdScaledSamplerDensityFunction : IDensityFunction
 
     public required INoise Noise { get; init; }
 
-    public double GetValue(double x, double y, double z) => throw new NotImplementedException();
+    public double MinValue => throw new NotImplementedException();
+
+    public double MaxValue => throw new NotImplementedException();
+
+    public double GetValue(double x, double y, double z) => 1.0D;
 }

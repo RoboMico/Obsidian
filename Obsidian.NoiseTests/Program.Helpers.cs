@@ -7,11 +7,13 @@ using Obsidian.API.Registries;
 using Obsidian.API.World.Generator.Noise;
 using Obsidian.API;
 
+
+
 public partial class Program
 {
     private class Test2DNoiseModule(int sourceModuleCount) : Module(sourceModuleCount)
     {
-        private readonly IDensityFunction fn = NoiseRegistry.NoiseSettings.Overworld.NoiseRouter.FinalDensity;
+        private readonly IDensityFunction fn = NoiseRegistry.DensityFunctions.Overworld.Factor;
         public override double GetValue(double x, double y, double z)
         {
             double val = fn.GetValue(x, y, z);

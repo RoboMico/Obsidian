@@ -7,5 +7,9 @@ public sealed class BlendDensityFunction : IDensityFunction
 
     public required IDensityFunction Argument { get; init; }
 
+    public double MinValue => double.MinValue;
+
+    public double MaxValue => double.MaxValue;
+
     public double GetValue(double x, double y, double z) => Argument.GetValue(x, y, z); // No-op
 }

@@ -7,6 +7,10 @@ public sealed class QuarterNegativeDensityFunction : IDensityFunction
 
     public required IDensityFunction Argument { get; init; }
 
+    public double MinValue => Argument.MinValue < 0 ? Argument.MinValue / 4D : Argument.MinValue;
+
+    public double MaxValue => Argument.MaxValue;
+
     public double GetValue(double x, double y, double z)
     {
         var val = Argument.GetValue(x, y, z);

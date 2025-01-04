@@ -1,4 +1,7 @@
-﻿namespace Obsidian.API.World.Generator.DensityFunctions;
+﻿using Microsoft.CodeAnalysis;
+using Obsidian.API.Noise;
+
+namespace Obsidian.API.World.Generator.DensityFunctions;
 
 [DensityFunction("minecraft:spline")]
 public sealed class SplineDensityFunction : IDensityFunction
@@ -7,5 +10,13 @@ public sealed class SplineDensityFunction : IDensityFunction
 
     public required Spline Spline { get; init; }
 
-    public double GetValue(double x, double y, double z) => throw new NotImplementedException();
+    public double MinValue => Spline.MinValue;
+
+    public double MaxValue => Spline.MaxValue;
+
+    public double GetValue(double x, double y, double z)
+    {
+        Spline.Create();
+        return Spline.Apply(x, y, z);
+    }
 }

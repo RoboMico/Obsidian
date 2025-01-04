@@ -7,5 +7,9 @@ public sealed class ConstantDensityFunction : IDensityFunction
 
     public required double Argument { get; init; }
 
+    public double MinValue => Argument;
+
+    public double MaxValue => Argument;
+
     public double GetValue(double x, double y, double z) => Argument;
 }

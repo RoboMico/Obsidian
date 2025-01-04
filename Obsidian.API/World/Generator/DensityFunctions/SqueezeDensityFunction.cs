@@ -7,6 +7,10 @@ public sealed class SqueezeDensityFunction : IDensityFunction
 
     public required IDensityFunction Argument { get; init; }
 
+    public double MinValue => -0.45832;
+
+    public double MaxValue => 0.45834;
+
     public double GetValue(double x, double y, double z)
     {
         double val = Argument.GetValue(x, y, z);
